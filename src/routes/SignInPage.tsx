@@ -63,7 +63,7 @@ export default function SignInPage() {
           <button
             type="submit"
             onClick={handleLogin}
-            className="w-full py-3 rounded-lg font-medium bg-[#EDEDED] text-[#AEAEAE]"
+            className="w-full py-3 rounded-lg font-medium bg-gray-200 text-gray-400"
           >
             로그인
           </button>
