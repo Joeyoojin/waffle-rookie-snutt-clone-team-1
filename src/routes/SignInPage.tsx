@@ -1,6 +1,10 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function SignInPage() {
+  const navigate = useNavigate();
   const handleBack = () => {
     // 여기에 뒤로 가기 기능 구현
+    navigate('/');
     console.debug('Back button clicked');
   };
 
