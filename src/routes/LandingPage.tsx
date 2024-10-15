@@ -15,28 +15,26 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col justify-center items-center min-w-[375px] h-screen pb-[90px] bg-white font-pretendard">
-      <div className="w-[59.997px] mt-[232px] mb-[16px]">
+      <div className="w-[59.997px] mt-[232px] mb-4">
         <img src={waffle_logo}></img>
       </div>
       <h1 className="text-xl font-extrabold">TimeTable</h1>
-      <div className="flex flex-col w-full px-[32px] mt-[136px] mb-[40px]">
+      <div className="flex flex-col w-full px-8 mt-[136px] mb-10">
         <button
-          className="w-full p-[12px] mb-[16px] rounded-md bg-snutt-orange"
+          className="w-full p-3 mb-4 rounded-md bg-snutt-orange"
           onClick={navigateToSignIn}
         >
           로그인
         </button>
-        <button className="p-[12px]">회원가입</button>
+        <button className="p-3">회원가입</button>
       </div>
       <div className="flex items-center">
         <div className="inline w-[100px] border-b-2"></div>
-        <div className="inline px-[10px] text-gray-400">
-          SNS 계정으로 계속하기
-        </div>
+        <div className="inline px-2.5 text-gray-400">SNS 계정으로 계속하기</div>
         <div className="inline w-[100px] border-b-2"></div>
       </div>
 
-      <div className="flex justify-center w-screen px-[12px] pt-[24px] mx-[12px]">
+      <div className="flex justify-center w-screen px-3 pt-6 mx-3">
         <img src={kakao_logo} className="pr-3"></img>
         <img src={google_logo} className="pr-3"></img>
         <img src={facebook_logo} className="pr-3"></img>
