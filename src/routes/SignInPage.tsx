@@ -97,7 +97,7 @@ export default function SignInPage() {
         </div>
       </header>
 
-      <main className="flex-grow w-[375px] p-6 mt-3">
+      <main className="flex-grow w-[375px] mt-3">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label
