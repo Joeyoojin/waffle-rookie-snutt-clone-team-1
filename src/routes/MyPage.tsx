@@ -1,5 +1,6 @@
 import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
 
@@ -17,9 +18,15 @@ interface UserInfo {
   fbName: string;
 }
 
-export default function UserInfoPage() {
+export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  const navigateToTime = () => {
+    navigate('/timepage');
+  };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -74,11 +81,19 @@ export default function UserInfoPage() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       {userInfo !== null ? (
-        <div className="text-xl font-bold">
-          <span className="text-snutt-orange font-extrabold">
-            {userInfo.nickname.nickname}#{userInfo.nickname.tag}
-          </span>{' '}
-          님 <br /> 오늘도 활기찬 하루 되세요!
+        <div>
+          <div className="text-lg font-bold">
+            <span className="text-snutt-orange font-extrabold">
+              {userInfo.nickname.nickname}#{userInfo.nickname.tag}
+            </span>{' '}
+            님 <br /> 오늘도 알찬 하루 되세요!
+          </div>
+          <button
+            className="py-3 mt-5 bg-snutt-yellow text-extrabold text-white w-full rounded-md"
+            onClick={navigateToTime}
+          >
+            시간표 바로가기
+          </button>
         </div>
       ) : (
         <div className="text-gray-500">
