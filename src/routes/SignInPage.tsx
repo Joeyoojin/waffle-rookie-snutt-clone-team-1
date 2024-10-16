@@ -80,8 +80,6 @@ export default function SignInPage() {
     });
   };
 
-  const isFormValid = formData.id !== '' && formData.password !== '';
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <header className="relative w-[375px] p-4 border-b border-gray-200">
@@ -97,7 +95,7 @@ export default function SignInPage() {
         </div>
       </header>
 
-      <main className="flex-grow w-[375px] p-6 mt-3">
+      <main className="flex-grow w-[375px] p-6">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label
@@ -113,7 +111,9 @@ export default function SignInPage() {
               value={formData.id}
               onChange={handleInputChange}
               placeholder="아이디를 입력하세요"
-              className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none text-sm"
+              className={`w-full px-3 py-2 border-b focus:outline-none text-sm ${
+                formData.id !== '' ? 'border-snutt-orange' : 'border-gray-300'
+              }`}
             />
           </div>
 
@@ -131,7 +131,11 @@ export default function SignInPage() {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="비밀번호를 입력하세요"
-              className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none text-sm"
+              className={`w-full px-3 py-2 border-b focus:outline-none text-sm ${
+                formData.password !== ''
+                  ? 'border-snutt-orange'
+                  : 'border-gray-300'
+              }`}
             />
           </div>
 
@@ -141,11 +145,7 @@ export default function SignInPage() {
 
           <button
             type="submit"
-            className={`w-full py-3 mt-6 rounded-lg font-medium ${
-              isFormValid
-                ? 'bg-snutt-orange text-white'
-                : 'bg-gray-200 text-gray-400'
-            }`}
+            className="w-full py-3 rounded-lg font-medium bg-gray-200 text-gray-400"
           >
             로그인
           </button>
