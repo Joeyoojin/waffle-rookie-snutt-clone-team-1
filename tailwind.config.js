@@ -13,7 +13,10 @@ export default {
         'snutt-navy': '#6E66BA',
         'snutt-purple': '#BA66BA',
       },
+      fontFamily: {
+        SF: ['San Francisco', 'Pretendard-Regular', 'sans-serif'],
+      },
     },
+    plugins: [],
   },
-  plugins: [],
 };
