@@ -18,7 +18,7 @@ interface UserInfo {
   fbName: string;
 }
 
-export default function UserInfoPage() {
+export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
