@@ -14,31 +14,38 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-w-[375px] h-screen pb-[90px] bg-white font-pretendard">
-      <div className="w-[59.997px] mt-[232px] mb-4">
-        <img src={waffle_logo}></img>
-      </div>
-      <h1 className="text-xl font-extrabold">TimeTable</h1>
-      <div className="flex flex-col w-full px-8 mt-[136px] mb-10">
-        <button
-          className="w-full p-3 mb-4 rounded-md bg-snutt-orange"
-          onClick={navigateToSignIn}
-        >
-          로그인
-        </button>
-        <button className="p-3">회원가입</button>
-      </div>
-      <div className="flex items-center">
-        <div className="inline w-[100px] border-b-2"></div>
-        <div className="inline px-2.5 text-gray-400">SNS 계정으로 계속하기</div>
-        <div className="inline w-[100px] border-b-2"></div>
-      </div>
+    <div className="flex justify-center items-center w-full h-screen bg-white">
+      <div className="flex flex-col items-center w-[375px] h-auto">
+        <div className="w-16 mt-10 mb-4">
+          <img src={waffle_logo} alt="Waffle logo" />
+        </div>
+        <div className="text-3xl font-extrabold font-SF">TimeTable</div>
+        <div className="flex flex-col w-full px-6 mt-20 mb-6">
+          <button
+            className="w-full py-3 mb-3 rounded-md bg-snutt-orange text-white"
+            onClick={navigateToSignIn}
+          >
+            로그인
+          </button>
+          <button className="py-3 text-snutt-orange border border-snutt-orange rounded-md">
+            회원가입
+          </button>
+        </div>
 
-      <div className="flex justify-center w-screen px-3 pt-6 mx-3">
-        <img src={kakao_logo} className="pr-3"></img>
-        <img src={google_logo} className="pr-3"></img>
-        <img src={facebook_logo} className="pr-3"></img>
-        <img src={apple_logo}></img>
+        <div className="flex items-center w-full px-4 mt-10 mb-6">
+          <div className="flex-1 border-b"></div>
+          <div className="px-2 text-sm text-gray-400 whitespace-nowrap">
+            SNS 계정으로 계속하기
+          </div>
+          <div className="flex-1 border-b"></div>
+        </div>
+
+        <div className="flex justify-between w-full max-w-xs px-6">
+          <img src={kakao_logo} className="w-12 h-12" alt="Kakao" />
+          <img src={google_logo} className="w-12 h-12" alt="Google" />
+          <img src={facebook_logo} className="w-12 h-12" alt="Facebook" />
+          <img src={apple_logo} className="w-12 h-12" alt="Apple" />
+        </div>
       </div>
     </div>
   );

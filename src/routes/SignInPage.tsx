@@ -1,33 +1,102 @@
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignInPage() {
   const navigate = useNavigate();
+
   const handleBack = () => {
-    // 여기에 뒤로 가기 기능 구현
     navigate('/');
-    console.debug('Back button clicked');
   };
 
-  const handleLogin = () => {
-    // 여기에 로그인 구현
-    console.debug('Login button clicked');
+  const [formData, setFormData] = useState({
+    id: '',
+    password: '',
+  });
+
+  const [error, setError] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const signIn = async (credentials: { id: string; password: string }) => {
+    try {
+      const response = await fetch(
+        'https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/auth/login_local',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('아이디 또는 비밀번호를 다시 확인해주세요.');
+      }
+
+      const data = (await response.json()) as { token: string };
+
+      localStorage.setItem('token', data.token);
+      console.debug('Login Success:', data);
+
+      const userResponse = await fetch(
+        'https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/users/me',
+        {
+          method: 'GET',
+          headers: {
+            'x-access-token': data.token,
+          },
+        },
+      );
+
+      const userInfo = (await userResponse.json()) as {
+        id: string;
+        name: string;
+        email: string;
+      };
+      console.debug('userinfo:', userInfo);
+
+      navigate('/MyPage');
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('오류가 발생했습니다. 다시 시도해주세요.');
+      }
+      console.error('Error:', err);
+    }
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    signIn(formData).catch((err: unknown) => {
+      console.error('Login failed:', err);
+    });
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white font-pretendard">
-      <header className="relative flex justify-center items-center p-4 border-b border-gray-200">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+      <header className="relative w-[375px] p-4 border-b border-gray-200">
         <button
           onClick={handleBack}
           className="absolute left-4 flex items-center text-gray-600"
         >
-          <span className="text-2xl">&lt;</span>
-          <span className="ml-1 text-base">뒤로</span>
+          <span className="text-xl">&lt;</span>
+          <span className="ml-1 text-semibold mt-1">뒤로</span>
         </button>
-        <h1 className="text-lg font-semibold">로그인</h1>
+        <div className="flex justify-center items-center">
+          <h1 className="text-lg font-semibold">로그인</h1>
+        </div>
       </header>
 
-      <main className="flex-grow p-6">
-        <form className="space-y-6">
+      <main className="flex-grow w-[375px] p-6">
+        <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label
               htmlFor="id"
@@ -38,6 +107,9 @@ export default function SignInPage() {
             <input
               type="text"
               id="id"
+              name="id"
+              value={formData.id}
+              onChange={handleInputChange}
               placeholder="아이디를 입력하세요"
               className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none text-sm"
             />
@@ -51,22 +123,22 @@ export default function SignInPage() {
               비밀번호
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
               placeholder="비밀번호를 입력하세요"
               className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none text-sm"
             />
           </div>
 
-          <div className="flex items-center space-x-2 text-xs text-gray-500">
-            <span className="underline">아이디 찾기</span>
-            <span className="text-gray-300">|</span>
-            <span className="underline">비밀번호 재설정</span>
-          </div>
+          {error !== '' && (
+            <div className="text-snutt-orange text-sm">{error}</div>
+          )}
 
           <button
             type="submit"
-            onClick={handleLogin}
             className="w-full py-3 rounded-lg font-medium bg-gray-200 text-gray-400"
           >
             로그인
