@@ -113,7 +113,9 @@ export default function SignInPage() {
               value={formData.id}
               onChange={handleInputChange}
               placeholder="아이디를 입력하세요"
-              className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none text-sm"
+              className={`w-full px-3 py-2 border-b focus:outline-none text-sm ${
+                formData.id !== '' ? 'border-snutt-orange' : 'border-gray-300'
+              }`}
             />
           </div>
 
@@ -131,7 +133,11 @@ export default function SignInPage() {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="비밀번호를 입력하세요"
-              className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none text-sm"
+              className={`w-full px-3 py-2 border-b focus:outline-none text-sm ${
+                formData.password !== ''
+                  ? 'border-snutt-orange'
+                  : 'border-gray-300'
+              }`}
             />
           </div>
 
