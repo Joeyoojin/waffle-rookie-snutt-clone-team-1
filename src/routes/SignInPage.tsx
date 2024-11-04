@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from './../contexts/AuthContext';
+
 export default function SignInPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleBack = () => {
     navigate('/');
@@ -45,24 +48,8 @@ export default function SignInPage() {
       localStorage.setItem('token', data.token);
       console.debug('Login Success:', data);
 
-      const userResponse = await fetch(
-        'https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/users/me',
-        {
-          method: 'GET',
-          headers: {
-            'x-access-token': data.token,
-          },
-        },
-      );
-
-      const userInfo = (await userResponse.json()) as {
-        id: string;
-        name: string;
-        email: string;
-      };
-      console.debug('userinfo:', userInfo);
-
-      navigate('/MyPage');
+      login(); // 로그인 상태 업데이트
+      navigate('/timepage');
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

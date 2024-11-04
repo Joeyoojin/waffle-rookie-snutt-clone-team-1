@@ -1,6 +1,8 @@
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
 
+import MenuBar from '../components/MenuBar';
+
 type Day = 0 | 1 | 2 | 3 | 4;
 const DAY_LABEL_MAP = {
   0: '월',
@@ -219,8 +221,7 @@ export default function TimePage() {
       </div>
 
       {/* Bottom Navigation Bar */}
-      <div className="h-[50px] flex-none bg-gray-200">네비바</div>
-      <div className="h-[34px] flex-none" />
+      <MenuBar />
     </div>
   );
 }
