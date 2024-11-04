@@ -401,7 +401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-icons@npm:^1.3.1":
+"@radix-ui/react-icons@npm:1.3.1":
   version: 1.3.1
   resolution: "@radix-ui/react-icons@npm:1.3.1"
   peerDependencies:
@@ -3762,7 +3762,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seminar-2024-frontend-template@workspace:."
   dependencies:
-    "@radix-ui/react-icons": "npm:^1.3.1"
+    "@radix-ui/react-icons": "npm:1.3.1"
     "@types/node": "npm:22.7.4"
     "@types/react": "npm:18.3.10"
     "@types/react-dom": "npm:18.3.0"
