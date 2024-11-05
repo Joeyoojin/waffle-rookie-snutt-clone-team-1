@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAuth } from './contexts/AuthContext';
+import AccountPage from './routes/AccountPage';
+import ChangeNicknamePage from './routes/ChangeNicknamePage';
 import LandingPage from './routes/LandingPage';
 import MyPage from './routes/MyPage';
 import SignInPage from './routes/SignInPage';
@@ -36,6 +38,11 @@ const AppRouter = () => {
             <TimePage />
           </PrivateRoute>
         }
+      />
+      <Route path="/mypage/account" element={<AccountPage />} />
+      <Route
+        path="/mypage/account/change-nickname"
+        element={<ChangeNicknamePage />}
       />
     </Routes>
   );
