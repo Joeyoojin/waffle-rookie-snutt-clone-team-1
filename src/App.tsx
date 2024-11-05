@@ -3,6 +3,8 @@ import './App.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import AccountPage from './routes/AccountPage';
+import ChangeNicknamePage from './routes/ChangeNicknamePage';
 import LandingPage from './routes/LandingPage';
 import MyPage from './routes/MyPage';
 import SignInPage from './routes/SignInPage';
@@ -16,6 +18,11 @@ export const App = () => {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/timepage" element={<TimePage />} />
+        <Route path="/mypage/account" element={<AccountPage />} />
+        <Route
+          path="/mypage/account/change-nickname"
+          element={<ChangeNicknamePage />}
+        />
       </Routes>
     </BrowserRouter>
   );
