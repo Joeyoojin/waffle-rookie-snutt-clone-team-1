@@ -103,10 +103,10 @@ export default function MyPage() {
               <div className="space-y-6">
                 <div className="bg-white rounded-lg shadow">
                   <div
-                    className="p-3 flex items-center justify-between"
+                    className="p-3 flex items-center justify-between cursor-pointer"
                     onClick={navigateToAccount}
                   >
-                    <h2 className="text-sm">내 계정</h2>
+                    <h2 className="text-sm cursor-pointer">내 계정</h2>
                     <div className="flex items-center gap-1">
                       <span className="text-sm text-gray-500">
                         {userInfo.nickname.nickname}#{userInfo.nickname.tag}
@@ -208,7 +208,9 @@ export default function MyPage() {
                       onClick={handleLogout}
                     >
                       <div className="p-3 flex items-center justify-between">
-                        <span className="text-sm text-red-500">로그아웃</span>
+                        <div className="text-sm cursor-pointer text-red-500">
+                          로그아웃
+                        </div>
                       </div>
                     </div>
                   </div>

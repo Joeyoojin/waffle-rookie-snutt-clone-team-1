@@ -14,7 +14,10 @@ const MenuBar = () => {
 
   const isTimePage =
     location.pathname === '/timepage' || location.pathname === '/';
-  const isMyPage = location.pathname === '/mypage';
+  const isMyPage =
+    location.pathname === '/mypage' ||
+    location.pathname === '/mypage/account' ||
+    location.pathname === '/mypage/account/change-nickname';
 
   return (
     <div className="h-[50px] px-[30px] py-2.5 pb-4 justify-between items-center inline-flex">
@@ -22,6 +25,7 @@ const MenuBar = () => {
         onClick={() => {
           navigate('/timepage');
         }}
+        className="cursor-pointer"
       >
         {isTimePage ? (
           <TimetableOn width="30" height="30" />
@@ -42,6 +46,7 @@ const MenuBar = () => {
         onClick={() => {
           navigate('/mypage');
         }}
+        className="cursor-pointer"
       >
         {isMyPage ? (
           <SettingOn width="30" height="30" />
