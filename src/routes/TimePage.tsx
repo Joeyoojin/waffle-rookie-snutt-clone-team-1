@@ -219,8 +219,6 @@ export default function TimePage() {
           ))}
         </div>
       </div>
-
-      {/* Bottom Navigation Bar */}
       <MenuBar />
     </div>
   );

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
+import MenuBar from '../components/MenuBar';
 
 interface UserInfo {
   nickname: {
@@ -89,20 +90,20 @@ export default function MyPage() {
   }
   return (
     <div className="min-h-screen">
-      <div className="max-w-[375px] mx-auto bg-white min-h-screen flex flex-col">
-        <header className="p-4 border-b border-gray-200">
+      <div className=" mx-auto bg-white min-h-screen flex flex-col">
+        <header className="p-3 border-b border-gray-200">
           <div className="flex justify-center items-center">
             <h1 className="text-lg font-semibold">더보기</h1>
           </div>
         </header>
 
-        <main className="flex-1 p-4 bg-gray-50">
+        <main className="flex-1 p-3 bg-gray-50">
           {userInfo !== null ? (
             <div>
               <div className="space-y-6">
                 <div className="bg-white rounded-lg shadow">
                   <div
-                    className="p-4 flex items-center justify-between"
+                    className="p-3 flex items-center justify-between"
                     onClick={navigateToAccount}
                   >
                     <h2 className="text-sm">내 계정</h2>
@@ -116,21 +117,21 @@ export default function MyPage() {
                 </div>
 
                 <div>
-                  <h2 className="p-4 text-sm font-sm text-gray-500">
+                  <h2 className="p-2 text-sm font-sm text-gray-500">
                     디스플레이
                   </h2>
 
                   <div className="bg-white rounded-lg shadow">
                     <div className="divide-y divide-gray-200">
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">색상 모드</span>
                         <span className="text-sm text-gray-500">자동 &gt;</span>
                       </div>
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">시간표 설정</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">시간표 테마</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
@@ -139,10 +140,10 @@ export default function MyPage() {
                 </div>
 
                 <div>
-                  <h2 className="p-4 text-sm font-sm text-gray-500">서비스</h2>
+                  <h2 className="p-2 text-sm font-sm text-gray-500">서비스</h2>
                   <div className="bg-white rounded-lg shadow">
                     <div className="divide-y divide-gray-200">
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">빈자리 알림</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
@@ -151,18 +152,18 @@ export default function MyPage() {
                 </div>
 
                 <div>
-                  <h2 className="p-4 text-sm font-sm text-gray-500">
+                  <h2 className="p-2 text-sm font-sm text-gray-500">
                     정보 및 제안
                   </h2>
                   <div className="bg-white rounded-lg shadow">
                     <div className="divide-y divide-gray-200">
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">버전 정보</span>
                         <span className="text-sm text-gray-500">
                           v3.8.0-release.7
                         </span>
                       </div>
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">개발자 정보</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
@@ -173,7 +174,7 @@ export default function MyPage() {
                 <div>
                   <div className="bg-white rounded-lg shadow">
                     <div className="divide-y divide-gray-200">
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">개발자 괴롭히기</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
@@ -184,15 +185,15 @@ export default function MyPage() {
                 <div>
                   <div className="bg-white rounded-lg shadow">
                     <div className="divide-y divide-gray-200">
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">오픈소스 라이선스</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">서비스 약관</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm">개인정보처리방침</span>
                         <span className="text-sm text-gray-500">&gt;</span>
                       </div>
@@ -206,7 +207,7 @@ export default function MyPage() {
                       className="divide-y divide-gray-200"
                       onClick={handleLogout}
                     >
-                      <div className="p-4 flex items-center justify-between">
+                      <div className="p-3 flex items-center justify-between">
                         <span className="text-sm text-red-500">로그아웃</span>
                       </div>
                     </div>
@@ -220,6 +221,7 @@ export default function MyPage() {
             </div>
           )}
         </main>
+        <MenuBar />
       </div>
     </div>
   );
