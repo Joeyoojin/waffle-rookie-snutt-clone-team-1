@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import RouteGuard from './components/RouteGuard'; 
+import RouteGuard from './components/RouteGuard';
 import { useAuth } from './contexts/AuthContext';
 import AccountPage from './routes/AccountPage';
 import ChangeNicknamePage from './routes/ChangeNicknamePage';
@@ -18,12 +18,8 @@ const AppRouter = () => {
       <Route path="/" element={isLoggedIn ? <TimePage /> : <LandingPage />} />
       <Route path="/signin" element={<SignInPage />} />
 
-  
       <Route path="/mypage" element={<RouteGuard element={<MyPage />} />} />
-      <Route
-        path="/timepage"
-        element={<RouteGuard element={<TimePage />} />}
-      />
+      <Route path="/timepage" element={<RouteGuard element={<TimePage />} />} />
       <Route
         path="/mypage/account"
         element={<RouteGuard element={<AccountPage />} />}
