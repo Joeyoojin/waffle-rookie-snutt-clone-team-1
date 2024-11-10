@@ -48,7 +48,7 @@ export default function SignInPage() {
       localStorage.setItem('token', data.token);
       console.debug('Login Success:', data);
 
-      login(); // 로그인 상태 업데이트
+      login();
       navigate('/timepage');
     } catch (err) {
       if (err instanceof Error) {

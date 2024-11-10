@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
+import MenuBar from '../components/MenuBar';
 
 interface UserInfo {
   nickname: {
@@ -129,7 +130,7 @@ export default function ChangeNicknamePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-[375px] mx-auto bg-white min-h-screen">
+      <div className=" mx-auto bg-white min-h-screen flex flex-col">
         <header className="p-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <button
@@ -154,7 +155,7 @@ export default function ChangeNicknamePage() {
           </div>
         </header>
 
-        <main className="p-4">
+        <main className="p-3 flex-1 bg-gray-50">
           <div className="space-y-4">
             <div className="text-sm text-gray-500">
               닉네임 (공백 포함 한/영/숫자 10자 이내)
@@ -185,9 +186,7 @@ export default function ChangeNicknamePage() {
               <p>변경된 닉네임은 나의 모든 친구에게 반영됩니다.</p>
 
               <div className="mt-8">
-                <h3 className="font-medium mt-8 mb-2 ml-2 font-semibold">
-                  닉네임 조건
-                </h3>
+                <h3 className=" mt-8 mb-2 ml-2 font-semibold">닉네임 조건</h3>
                 <ul className="space-y-1">
                   <li>• 불완전한 한글(예: ㄱ, ㅏ)은 포함될 수 없습니다.</li>
                   <li>• 영문 대/소문자는 구분됩니다.</li>
@@ -200,6 +199,7 @@ export default function ChangeNicknamePage() {
             </div>
           </div>
         </main>
+        <MenuBar />
       </div>
     </div>
   );
