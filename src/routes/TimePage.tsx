@@ -136,10 +136,7 @@ export default function TimePage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      {/* Top Navigation Bar */}
-      <div className="h-11 flex-none" />
-
+    <div className="flex flex-col h-screen pt-11 bg-white">
       {/* Page Header */}
       <div className="flex items-center h-11 flex-none pt-2 pb-1.5 pl-4 pr-3 mb-1 border-b border-gray-300">
         <HamburgerMenuIcon className="mr-3" />
