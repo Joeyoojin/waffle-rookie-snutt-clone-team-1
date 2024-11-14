@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
+import MenuBar from '../components/MenuBar';
 
 interface UserInfo {
   nickname: {
@@ -81,8 +82,8 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-[375px] mx-auto bg-white min-h-screen">
-        <header className="p-4 border-b border-gray-200">
+      <div className="mx-auto bg-white min-h-screen flex flex-col">
+        <header className="p-3 border-b border-gray-200">
           <div className="flex items-center">
             <button
               onClick={() => {
@@ -99,7 +100,7 @@ export default function AccountPage() {
           </div>
         </header>
 
-        <main className="p-4 bg-gray-50">
+        <main className="flex-1 p-3 bg-gray-50">
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow">
               <div className="divide-y divide-gray-200">
@@ -157,6 +158,7 @@ export default function AccountPage() {
             </div>
           </div>
         </main>
+        <MenuBar />
       </div>
     </div>
   );

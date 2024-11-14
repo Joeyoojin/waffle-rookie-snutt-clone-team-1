@@ -1,6 +1,8 @@
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
+import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
 
+import loading_lottie from '../assets/loading_lottie.json';
 import MenuBar from '../components/MenuBar';
 
 type Day = 0 | 1 | 2 | 3 | 4;
@@ -122,17 +124,19 @@ export default function TimePage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-500">Loading...</div>
+      <div className="flex justify-center items-center h-screen">
+        <Lottie
+          animationData={loading_lottie}
+          loop={true}
+          autoplay={true}
+          style={{ width: 200, height: 200 }}
+        />
       </div>
     );
   }
 
   return (
     <div className="flex flex-col h-screen bg-white">
-      {/* Top Navigation Bar */}
-      <div className="h-11 flex-none" />
-
       {/* Page Header */}
       <div className="flex items-center h-11 flex-none pt-2 pb-1.5 pl-4 pr-3 mb-1 border-b border-gray-300">
         <HamburgerMenuIcon className="mr-3" />
@@ -219,8 +223,6 @@ export default function TimePage() {
           ))}
         </div>
       </div>
-
-      {/* Bottom Navigation Bar */}
       <MenuBar />
     </div>
   );
