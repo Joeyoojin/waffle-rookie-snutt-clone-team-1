@@ -90,14 +90,14 @@ export default function MyPage() {
   }
   return (
     <div className="min-h-screen">
-      <div className=" mx-auto bg-white min-h-screen flex flex-col">
-        <header className="p-3 border-b border-gray-200">
+      <div className="mx-auto bg-white min-h-screen flex flex-col">
+        <header className="p-3 border-b border-gray-200 sticky top-0 z-50 bg-white">
           <div className="flex justify-center items-center">
             <h1 className="text-lg font-semibold">더보기</h1>
           </div>
         </header>
 
-        <main className="flex-1 p-3 bg-gray-50">
+        <main className="flex-1 p-3 mb-12 bg-gray-50 overflow-scroll overflow-y-auto overflow-x-hidden">
           {userInfo !== null ? (
             <div>
               <div className="space-y-6">

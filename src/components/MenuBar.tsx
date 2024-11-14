@@ -20,7 +20,7 @@ const MenuBar = () => {
     location.pathname === '/mypage/account/change-nickname';
 
   return (
-    <div className="h-[50px] px-[30px] py-2.5 pb-4 justify-between items-center inline-flex">
+    <div className="h-[50px] px-[30px] py-2.5 pb-4 justify-between items-center inline-flex bg-white fixed bottom-0 left-0 right-0">
       <div
         onClick={() => {
           navigate('/timepage');
