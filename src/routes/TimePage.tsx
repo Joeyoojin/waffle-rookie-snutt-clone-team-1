@@ -29,6 +29,7 @@ type ClassTime = {
 };
 
 export type Lecture = {
+  _id: string;
   course_title: string;
   instructor: string;
   credit: number;

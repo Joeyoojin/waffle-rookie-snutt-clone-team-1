@@ -15,6 +15,7 @@ import type { Lecture } from './TimePage';
 import { DAY_LABEL_MAP } from './TimePage';
 
 type LectureDetails = {
+  id: string;
   name: string;
   professor: string;
   credit: number;
@@ -72,6 +73,7 @@ export default function LectureListPage() {
                 ).times.push(timeRange);
               } else {
                 groupedLectures[lecture.course_title] = {
+                  id: lecture._id,
                   name: lecture.course_title,
                   professor: lecture.instructor,
                   credit: lecture.credit,
@@ -90,6 +92,7 @@ export default function LectureListPage() {
           ([
             title,
             {
+              id,
               professor,
               credit,
               department,
@@ -99,6 +102,7 @@ export default function LectureListPage() {
               times,
             },
           ]) => ({
+            id,
             name: title,
             professor,
             credit,
@@ -169,8 +173,8 @@ export default function LectureListPage() {
               시간표에 강좌가 없습니다.
             </li>
           ) : (
-            lectures.map((lecture, id) => (
-              <li key={id} className="py-3 border-b-[1px]">
+            lectures.map((lecture) => (
+              <li key={lecture.id} className="py-3 border-b-[1px]">
                 <div className="flex mb-2">
                   <span className="grow text-sm font-semibold">
                     {lecture.name}
