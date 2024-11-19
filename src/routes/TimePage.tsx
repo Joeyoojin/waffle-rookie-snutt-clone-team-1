@@ -1,12 +1,18 @@
-import { HamburgerMenuIcon } from '@radix-ui/react-icons';
+import {
+  BellIcon,
+  HamburgerMenuIcon,
+  ListBulletIcon,
+  Share1Icon,
+} from '@radix-ui/react-icons';
 import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
 import MenuBar from '../components/MenuBar';
 
 type Day = 0 | 1 | 2 | 3 | 4;
-const DAY_LABEL_MAP = {
+export const DAY_LABEL_MAP: { [key: number]: string } = {
   0: '월',
   1: '화',
   2: '수',
@@ -22,9 +28,12 @@ type ClassTime = {
   endMinute: number;
 };
 
-type Lecture = {
+export type Lecture = {
   course_title: string;
+  instructor: string;
   credit: number;
+  department: string;
+  academic_year: string;
   class_time_json: ClassTime[];
 };
 
@@ -49,6 +58,7 @@ export default function TimePage() {
   const [totalCredits, setTotalCredits] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     void (async () => {
@@ -141,9 +151,17 @@ export default function TimePage() {
       <div className="flex items-center h-11 flex-none pt-2 pb-1.5 pl-4 pr-3 mb-1 border-b border-gray-300">
         <HamburgerMenuIcon className="mr-3" />
         <p className="mr-2 text-lg font-bold">a안</p>
-        <p className="text-xs font-normal text-gray-400">
+        <p className="grow text-xs font-normal text-gray-400">
           ({totalCredits}학점)
         </p>
+        <ListBulletIcon
+          onClick={() => {
+            navigate('/timetables/:id/lectures');
+          }}
+          className="mr-3"
+        />
+        <Share1Icon className="mr-3" />
+        <BellIcon />
       </div>
 
       {/* Schedule Content */}
@@ -162,7 +180,7 @@ export default function TimePage() {
         </div>
 
         {/* Schedule Grid */}
-        <div className="grid grid-rows-13 h-[calc(100%-2rem)]">
+        <div className="grid grid-rows-13 h-[calc(100%-2rem)] pb-[50px]">
           {Array.from({ length: 13 }, (_, i) => i + 9).map((hour) => (
             <div
               key={hour}

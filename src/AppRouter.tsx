@@ -4,6 +4,7 @@ import RouteGuard from './components/RouteGuard';
 import { useAuth } from './contexts/AuthContext';
 import AccountPage from './routes/AccountPage';
 import ChangeNicknamePage from './routes/ChangeNicknamePage';
+import LectureListPage from './routes/CourseListPage';
 import LandingPage from './routes/LandingPage';
 import MyPage from './routes/MyPage';
 import SignInPage from './routes/SignInPage';
@@ -20,6 +21,10 @@ const AppRouter = () => {
 
       <Route path="/mypage" element={<RouteGuard element={<MyPage />} />} />
       <Route path="/timepage" element={<RouteGuard element={<TimePage />} />} />
+      <Route
+        path="/timetables/:id/lectures"
+        element={<RouteGuard element={<LectureListPage />} />}
+      />
       <Route
         path="/mypage/account"
         element={<RouteGuard element={<AccountPage />} />}
