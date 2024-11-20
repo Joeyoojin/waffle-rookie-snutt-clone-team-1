@@ -1,6 +1,4 @@
-import {
-  ChevronLeftIcon
-} from '@radix-ui/react-icons';
+import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -104,21 +102,21 @@ export default function CourseDetailPage() {
       try {
         if (timetableId === undefined) throw new Error('id is undefined');
         const response = await fetch(
-            `https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/tables/${timetableId}`,
-            {
-              method: 'GET',
-              headers: {
-                'x-access-token': token,
-              },
+          `https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/tables/${timetableId}`,
+          {
+            method: 'GET',
+            headers: {
+              'x-access-token': token,
             },
-          );;
+          },
+        );
 
         if (!response.ok) {
           throw new Error('강의 정보를 불러오는데 실패했습니다.!!!!');
-        }        
+        }
 
         const data = (await response.json()) as TimetableResponse;
-        
+
         const selectedLecture = data.lecture_list.find(
           (l) => l._id === lectureId,
         );
@@ -157,8 +155,11 @@ export default function CourseDetailPage() {
     }
 
     try {
+      if (timetableId === undefined)
+        throw new Error('timetableId is undefined');
+      if (lectureId === undefined) throw new Error('lectureId is undefined');
       const response = await fetch(
-        `https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/tables/${timetableId as string}/lecture/${lectureId as string}`,
+        `https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/tables/${timetableId}/lecture/${lectureId}`,
         {
           method: 'DELETE',
           headers: {
@@ -216,13 +217,13 @@ export default function CourseDetailPage() {
           </div>
         </header> */}
         <div className="flex items-center h-11 flex-none pt-2 pb-1.5 pl-4 pr-3 border-b border-gray-300 sticky top-0 bg-white">
-        <ChevronLeftIcon
-          onClick={() => {
-            navigate('/timepage');
-          }}
-        />
-        <p className="grow text-s font-normal">뒤로</p>
-      </div>
+          <ChevronLeftIcon
+            onClick={() => {
+              navigate('/timepage');
+            }}
+          />
+          <p className="grow text-s font-normal">뒤로</p>
+        </div>
 
         <main className="flex-1 p-3 mb-12">
           <div className="space-y-6">
@@ -240,7 +241,7 @@ export default function CourseDetailPage() {
                 <div className="p-3 flex items-center">
                   <span className="text-sm text-gray-500">색</span>
                   <div className="ml-4">
-                    {lecture.color !== undefined ? lecture.color.fg : '(없음)'}                    
+                    {lecture.color !== undefined ? lecture.color.fg : '(없음)'}
                   </div>
                 </div>
               </div>
@@ -256,47 +257,69 @@ export default function CourseDetailPage() {
 
             {/* Third Block */}
             <div className="bg-white rounded-lg shadow">
-             <div className="divide-y divide-gray-200">
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">학과</span>
-                 <span className="text-sm ml-4">{lecture.department !== '' ? lecture.department : '(없음)'}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">학년</span>
-                 <span className="text-sm ml-4">{lecture.academic_year !== '' ? lecture.academic_year : '(없음)'}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">학점</span>
-                 <span className="text-sm ml-4">{lecture.credit}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">분류</span>
-                 <span className="text-sm ml-4">{lecture.classification !== '' ? lecture.classification : '(없음)'}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">구분</span>
-                 <span className="text-sm ml-4">{lecture.category !== '' ? lecture.category : '(없음)'}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">강좌번호</span>
-                 <span className="text-sm ml-4">{lecture.course_number !== '' ? lecture.course_number : '(없음)'}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">분반번호</span>
-                 <span className="text-sm ml-4">{lecture.lecture_number !== '' ? lecture.lecture_number : '(없음)'}</span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">정원(재학생)</span>
-                 <span className="text-sm ml-4">
-                 {`${lecture.quota - (lecture.freshman_quota !== undefined ? lecture.freshman_quota : 0)}`}
-                 </span>
-               </div>
-               <div className="p-3 flex items-center">
-                 <span className="text-sm text-gray-500">비고</span>
-                 <span className="text-sm ml-4">{lecture.remark !== '' ? lecture.remark : '(없음)'}</span>
-               </div>
-             </div>
-           </div>
+              <div className="divide-y divide-gray-200">
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">학과</span>
+                  <span className="text-sm ml-4">
+                    {lecture.department !== '' ? lecture.department : '(없음)'}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">학년</span>
+                  <span className="text-sm ml-4">
+                    {lecture.academic_year !== ''
+                      ? lecture.academic_year
+                      : '(없음)'}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">학점</span>
+                  <span className="text-sm ml-4">{lecture.credit}</span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">분류</span>
+                  <span className="text-sm ml-4">
+                    {lecture.classification !== ''
+                      ? lecture.classification
+                      : '(없음)'}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">구분</span>
+                  <span className="text-sm ml-4">
+                    {lecture.category !== '' ? lecture.category : '(없음)'}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">강좌번호</span>
+                  <span className="text-sm ml-4">
+                    {lecture.course_number !== ''
+                      ? lecture.course_number
+                      : '(없음)'}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">분반번호</span>
+                  <span className="text-sm ml-4">
+                    {lecture.lecture_number !== ''
+                      ? lecture.lecture_number
+                      : '(없음)'}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">정원(재학생)</span>
+                  <span className="text-sm ml-4">
+                    {`${lecture.quota - (lecture.freshman_quota !== undefined ? lecture.freshman_quota : 0)}`}
+                  </span>
+                </div>
+                <div className="p-3 flex items-center">
+                  <span className="text-sm text-gray-500">비고</span>
+                  <span className="text-sm ml-4">
+                    {lecture.remark !== '' ? lecture.remark : '(없음)'}
+                  </span>
+                </div>
+              </div>
+            </div>
 
             {/* Fourth block */}
             {/* <div className="bg-white rounded-lg shadow">
