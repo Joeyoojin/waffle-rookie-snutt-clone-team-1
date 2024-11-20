@@ -147,6 +147,7 @@ export default function CourseDetailPage() {
     };
 
     void fetchLectureDetail();
+
   }, [timetableId, lectureId, navigate]);
 
   const handleDelete = async () => {
@@ -356,7 +357,7 @@ export default function CourseDetailPage() {
               </div>
             </div>
 
-            {/* 삭제 버튼 */}
+            {/* Delete */}
             <div className="bg-white rounded-lg shadow">
               <button
                 onClick={() => void handleDelete()}
