@@ -8,7 +8,7 @@ import AccountPage from './routes/AccountPage';
 import ChangeNicknamePage from './routes/ChangeNicknamePage';
 import LectureListPage from './routes/CourseListPage';
 import CreatePage from './routes/CreatePage';
-//import LandingPage from './routes/LandingPage';
+import LandingPage from './routes/LandingPage';
 import MyPage from './routes/MyPage';
 import SignInPage from './routes/SignInPage';
 import TimePage from './routes/TimePage';
@@ -67,19 +67,19 @@ const AppRouter = () => {
     return <div>Loading...</div>; // 로딩 화면
   }
 
-  if (!isLoggedIn) {
-    return <Navigate to="/signin" replace />;
-  }
-
   return (
     <Routes>
       <Route
         path="/"
         element={
-          redirectTimetableId !== null && redirectTimetableId !== '' ? (
-            <Navigate to={`/timetables/${redirectTimetableId}`} replace />
+          isLoggedIn ? (
+            redirectTimetableId !== null && redirectTimetableId !== '' ? (
+              <Navigate to={`/timetables/${redirectTimetableId}`} replace />
+            ) : (
+              <div>시간표가 없습니다. 새로 생성해주세요.</div>
+            )
           ) : (
-            <div>시간표가 없습니다. 새로 생성해주세요.</div>
+            <LandingPage />
           )
         }
       />
