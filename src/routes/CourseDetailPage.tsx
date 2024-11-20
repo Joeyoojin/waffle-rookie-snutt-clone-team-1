@@ -147,7 +147,6 @@ export default function CourseDetailPage() {
     };
 
     void fetchLectureDetail();
-
   }, [timetableId, lectureId, navigate]);
 
   const handleDelete = async () => {
