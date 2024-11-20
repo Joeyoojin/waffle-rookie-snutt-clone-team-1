@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
 import MenuBar from '../components/MenuBar';
+import { useLectureContext } from '../contexts/LectureContext';
 
 type Day = 0 | 1 | 2 | 3 | 4;
 const DAY_LABEL_MAP: { [key: number]: string } = {
@@ -89,6 +90,7 @@ export default function CourseDetailPage() {
   const [lecture, setLecture] = useState<Lecture | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { refetchLectures } = useLectureContext();
 
   const params = useParams<{ timetableId: string; lectureId: string }>();
   const { timetableId, lectureId } = params;
@@ -121,7 +123,7 @@ export default function CourseDetailPage() {
         );
 
         if (!response.ok) {
-          throw new Error('강의 정보를 불러오는데 실패했습니다.!!!!');
+          throw new Error('강의 정보를 불러오는데 실패했습니다.');
         }
 
         const data = (await response.json()) as TimetableResponse;
@@ -180,6 +182,7 @@ export default function CourseDetailPage() {
         throw new Error('강의 삭제에 실패했습니다.');
       }
 
+      await refetchLectures();
       navigate(-1);
     } catch (err) {
       setError(
