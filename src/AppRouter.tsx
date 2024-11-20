@@ -106,7 +106,7 @@ const AppRouter = () => {
         element={<RouteGuard element={<LectureListPage />} />}
       />
       <Route
-        path="/timetables/:id/lectures/:lectureId"
+        path="/timetables/:timetableId/lectures/:lectureId"
         element={<RouteGuard element={<CourseDetailPage />} />}
       />
       <Route
