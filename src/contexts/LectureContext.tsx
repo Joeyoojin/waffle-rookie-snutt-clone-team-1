@@ -75,8 +75,8 @@ export const LectureProvider = ({ children }: { children: ReactNode }) => {
 
   const refetchLectures = useCallback(async () => {
     if (timetableId === null || timetableId === '') {
-      setError('No timetable ID');
       setIsLoading(false);
+      setError('No timetable ID');
       return;
     }
 

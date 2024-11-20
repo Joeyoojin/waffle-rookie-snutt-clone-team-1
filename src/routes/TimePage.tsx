@@ -28,6 +28,8 @@ type ClassItem = {
   endTime: { hour: number; minute: number };
   name: string;
   location: string;
+  id: string;
+  timetableId: string;
 };
 
 const minutesToTime = (minutes: number) => ({
@@ -51,17 +53,22 @@ export default function TimePage() {
   }, [timetableId, setTimetableId]);
 
   useEffect(() => {
-    const classes = lectures.flatMap((lecture) =>
-      lecture.class_time_json.map((time) => ({
-        day: parseInt(time.day) as Day,
-        startTime: minutesToTime(time.startMinute),
-        endTime: minutesToTime(time.endMinute),
-        name: lecture.course_title,
-        location: time.place,
-      })),
-    );
-    setTransformedClasses(classes);
-  }, [lectures]);
+    if (timetableId !== undefined) {
+      // timetableId가 있을 때만 실행
+      const classes = lectures.flatMap((lecture) =>
+        lecture.class_time_json.map((time) => ({
+          day: parseInt(time.day) as Day,
+          startTime: minutesToTime(time.startMinute),
+          endTime: minutesToTime(time.endMinute),
+          name: lecture.course_title,
+          location: time.place,
+          id: lecture._id,
+          timetableId: timetableId,
+        })),
+      );
+      setTransformedClasses(classes);
+    }
+  }, [lectures, timetableId]);
 
   if (isLoading) {
     return (
@@ -163,6 +170,13 @@ export default function TimePage() {
                             style={{
                               top: `${startOffset}%`,
                               height: `${duration}%`,
+                            }}
+                            onClick={() => {
+                              if (timetableId !== undefined && item.id !== '') {
+                                navigate(
+                                  `/timetables/${timetableId}/lectures/${item.id}`,
+                                );
+                              }
                             }}
                           >
                             <div className="font-normal text-[10px] mb-1">

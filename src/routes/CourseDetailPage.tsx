@@ -6,6 +6,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import loading_lottie from '../assets/loading_lottie.json';
 import MenuBar from '../components/MenuBar';
 
+type Day = 0 | 1 | 2 | 3 | 4;
+const DAY_LABEL_MAP: { [key: number]: string } = {
+  0: '월',
+  1: '화',
+  2: '수',
+  3: '목',
+  4: '금',
+};
+
 interface LectureBuilding {
   id: string;
   buildingNumber: string;
@@ -23,7 +32,7 @@ interface LectureBuilding {
 }
 
 interface ClassTime {
-  day: string;
+  day: Day;
   place: string;
   startMinute: number;
   endMinute: number;
@@ -82,12 +91,12 @@ export default function CourseDetailPage() {
   const [error, setError] = useState<string | null>(null);
 
   const params = useParams<{ timetableId: string; lectureId: string }>();
+  const { timetableId, lectureId } = params;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLectureDetail = async () => {
       const token = localStorage.getItem('token');
-      const { timetableId, lectureId } = params;
 
       if (
         token === null ||
@@ -138,11 +147,10 @@ export default function CourseDetailPage() {
     };
 
     void fetchLectureDetail();
-  }, [params, navigate]);
+  }, [timetableId, lectureId, navigate]);
 
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
-    const { timetableId, lectureId } = params;
 
     if (
       token === null ||
@@ -219,7 +227,9 @@ export default function CourseDetailPage() {
         <div className="flex items-center h-11 flex-none pt-2 pb-1.5 pl-4 pr-3 border-b border-gray-300 sticky top-0 bg-white">
           <ChevronLeftIcon
             onClick={() => {
-              navigate('/timepage');
+              if (timetableId !== undefined) {
+                navigate(`/timetables/${timetableId}`);
+              }
             }}
           />
           <p className="grow text-s font-normal">뒤로</p>
@@ -322,23 +332,29 @@ export default function CourseDetailPage() {
             </div>
 
             {/* Fourth block */}
-            {/* <div className="bg-white rounded-lg shadow">
+            <div className="bg-white rounded-lg shadow">
               <h3 className="p-3 text-sm">시간 및 장소</h3>
               <div className="divide-y divide-gray-200">
-                {lecture.class_time_json?.map((time, index) => (
+                {lecture.class_time_json.map((time, index) => (
                   <div key={index} className="p-3 space-y-2">
                     <div className="flex items-center">
                       <span className="text-sm text-gray-500">시간</span>
-                      <span className="text-sm ml-4">{`${time.start_time || '??:??'} ~ ${time.end_time || '??:??'}`}</span>
+                      <span className="text-sm ml-4">
+                        {DAY_LABEL_MAP[time.day]}{' '}
+                        {time.start_time !== '' ? time.start_time : '??:??'} ~{' '}
+                        {time.end_time !== '' ? time.end_time : '??:??'}{' '}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <span className="text-sm text-gray-500">장소</span>
-                      <span className="text-sm ml-4">{time.place || '(없음)'}</span>
+                      <span className="text-sm ml-4">
+                        {time.place !== '' ? time.place : '(없음)'}
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
-            </div> */}
+            </div>
 
             {/* 삭제 버튼 */}
             <div className="bg-white rounded-lg shadow">
