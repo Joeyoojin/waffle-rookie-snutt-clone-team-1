@@ -122,7 +122,15 @@ export default function LectureListPage() {
             </li>
           ) : (
             transformedLectures.map((lecture) => (
-              <li key={lecture.id} className="py-3 border-b-[1px]">
+              <div
+                key={lecture.id}
+                className="py-3 border-b-[1px]"
+                onClick={() => {
+                  navigate(
+                    `/timetables/${timetableId as string}/lectures/${lecture.id}`,
+                  );
+                }}
+              >
                 <div className="flex mb-2">
                   <span className="grow text-sm font-semibold">
                     {lecture.name}
@@ -149,7 +157,7 @@ export default function LectureListPage() {
                   <SewingPinIcon className="mr-1" />
                   <span className="text-xs">{lecture.location}</span>
                 </div>
-              </li>
+              </div>
             ))
           )}
         </ul>
