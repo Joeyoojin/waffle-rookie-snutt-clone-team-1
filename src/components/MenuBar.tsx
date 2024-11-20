@@ -26,7 +26,7 @@ const MenuBar = () => {
           if (timetableId != null && timetableId !== '') {
             navigate(`/timetables/${timetableId}`);
           } else {
-            console.error('timetableId가 정의되지 않았습니다.');
+            console.error('timetableId is undefined.');
           }
         }}
         className="cursor-pointer"
