@@ -5,7 +5,7 @@ import {
   Share1Icon,
 } from '@radix-ui/react-icons';
 import Lottie from 'lottie-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
@@ -40,13 +40,12 @@ const timeInMinutesFromStart = (time: { hour: number; minute: number }) =>
 
 export default function TimePage() {
   const { id: timetableId } = useParams<{ id: string }>();
-  const { lectures, isLoading, error, setTimetableId, refetchLectures } =
-    useLectureContext();
+  const { lectures, isLoading, error, setTimetableId } = useLectureContext();
   const navigate = useNavigate();
   const [transformedClasses, setTransformedClasses] = useState<ClassItem[]>([]);
 
   useEffect(() => {
-    if (timetableId) {
+    if (timetableId !== undefined && timetableId !== '') {
       setTimetableId(timetableId);
     }
   }, [timetableId, setTimetableId]);
@@ -77,7 +76,7 @@ export default function TimePage() {
     );
   }
 
-  if (error) {
+  if (error !== null && error !== '') {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="text-red-500">Error: {error}</div>
