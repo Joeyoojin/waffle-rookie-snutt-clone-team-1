@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 
 import AppRouter from './AppRouter';
 import { AuthProvider } from './contexts/AuthContext';
+import { LectureProvider } from './contexts/LectureContext';
 
 export const App = () => {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
+      <LectureProvider>
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
+      </LectureProvider>
     </AuthProvider>
   );
 };

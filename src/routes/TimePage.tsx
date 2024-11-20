@@ -6,10 +6,11 @@ import {
 } from '@radix-ui/react-icons';
 import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import loading_lottie from '../assets/loading_lottie.json';
 import MenuBar from '../components/MenuBar';
+import { useLectureContext } from '../contexts/LectureContext';
 
 type Day = 0 | 1 | 2 | 3 | 4;
 export const DAY_LABEL_MAP: { [key: number]: string } = {
@@ -20,23 +21,6 @@ export const DAY_LABEL_MAP: { [key: number]: string } = {
   4: '금',
 };
 const dayList: Day[] = [0, 1, 2, 3, 4];
-
-type ClassTime = {
-  day: string;
-  place: string;
-  startMinute: number;
-  endMinute: number;
-};
-
-export type Lecture = {
-  _id: string;
-  course_title: string;
-  instructor: string;
-  credit: number;
-  department: string;
-  academic_year: string;
-  class_time_json: ClassTime[];
-};
 
 type ClassItem = {
   day: Day;
@@ -55,93 +39,47 @@ const timeInMinutesFromStart = (time: { hour: number; minute: number }) =>
   (time.hour - 9) * 60 + time.minute;
 
 export default function TimePage() {
-  const [classes, setClasses] = useState<ClassItem[]>([]);
-  const [totalCredits, setTotalCredits] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { id: timetableId } = useParams<{ id: string }>();
+  const { lectures, isLoading, error, setTimetableId } = useLectureContext();
   const navigate = useNavigate();
+  const [transformedClasses, setTransformedClasses] = useState<ClassItem[]>([]);
 
   useEffect(() => {
-    void (async () => {
-      const token = localStorage.getItem('token');
+    if (timetableId !== undefined && timetableId !== '') {
+      setTimetableId(timetableId);
+    }
+  }, [timetableId, setTimetableId]);
 
-      if (token === null || token.trim() === '') {
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch(
-          'https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/tables/recent',
-          {
-            headers: {
-              'x-access-token': token,
-            },
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch class data');
-        }
-
-        const data = (await response.json()) as {
-          lecture_list: Lecture[];
-        };
-
-        const uniqueCourses = new Set(
-          data.lecture_list.map((l) => l.course_title),
-        );
-        const credits = data.lecture_list.reduce(
-          (sum, lecture) =>
-            uniqueCourses.has(lecture.course_title)
-              ? (uniqueCourses.delete(lecture.course_title),
-                sum + lecture.credit)
-              : sum,
-          0,
-        );
-
-        setTotalCredits(credits);
-
-        const transformedClasses: ClassItem[] = data.lecture_list.flatMap(
-          (lecture) =>
-            lecture.class_time_json.map((time) => ({
-              day: parseInt(time.day) as Day,
-              startTime: minutesToTime(time.startMinute),
-              endTime: minutesToTime(time.endMinute),
-              name: lecture.course_title,
-              location: time.place,
-              credit: lecture.credit,
-            })),
-        );
-
-        setClasses(transformedClasses);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : 'Failed to fetch class data',
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
-
-  if (error !== null) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-red-500">Error: {error}</div>
-      </div>
+  useEffect(() => {
+    const classes = lectures.flatMap((lecture) =>
+      lecture.class_time_json.map((time) => ({
+        day: parseInt(time.day) as Day,
+        startTime: minutesToTime(time.startMinute),
+        endTime: minutesToTime(time.endMinute),
+        name: lecture.course_title,
+        location: time.place,
+      })),
     );
-  }
+    setTransformedClasses(classes);
+  }, [lectures]);
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Lottie
           animationData={loading_lottie}
-          loop={true}
-          autoplay={true}
+          loop
+          autoplay
           style={{ width: 200, height: 200 }}
         />
+      </div>
+    );
+  }
+
+  if (error !== null && error !== '') {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-red-500">Error: {error}</div>
       </div>
     );
   }
@@ -149,20 +87,22 @@ export default function TimePage() {
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* Page Header */}
-      <div className="flex items-center h-11 flex-none pt-2 pb-1.5 pl-4 pr-3 mb-1 border-b border-gray-300">
+      <div className="flex items-center h-12 flex-none pt-2 pb-1.5 px-4 Smb-1 border-b border-gray-300">
         <HamburgerMenuIcon className="mr-3" />
-        <p className="mr-2 text-lg font-bold">a안</p>
+        <p className="mr-2 text-lg font-bold">시간표</p>
         <p className="grow text-xs font-normal text-gray-400">
-          ({totalCredits}학점)
+          ({lectures.reduce((sum, lecture) => sum + lecture.credit, 0)}학점)
         </p>
         <ListBulletIcon
           onClick={() => {
-            navigate('/timetables/:id/lectures');
+            if (timetableId !== undefined && timetableId !== '') {
+              navigate(`/timetables/${timetableId}/lectures`);
+            }
           }}
-          className="mr-3"
+          className="mr-3 w-5 h-5"
         />
-        <Share1Icon className="mr-3" />
-        <BellIcon />
+        <Share1Icon className="mr-3 w-5 h-5" />
+        <BellIcon className="w-5 h-5" />
       </div>
 
       {/* Schedule Content */}
@@ -195,7 +135,7 @@ export default function TimePage() {
               {/* Day Columns */}
               {dayList.map((day) => (
                 <div key={day} className="border-l relative">
-                  {classes
+                  {transformedClasses
                     .filter((item) => item.day === day)
                     .map((item) => {
                       const classStart = timeInMinutesFromStart(item.startTime);
