@@ -8,6 +8,7 @@ import { useAuth } from './contexts/AuthContext';
 import { useLectureContext } from './contexts/LectureContext';
 import AccountPage from './routes/AccountPage';
 import ChangeNicknamePage from './routes/ChangeNicknamePage';
+import CourseDetailPage from './routes/CourseDetailPage';
 import LectureListPage from './routes/CourseListPage';
 import CreatePage from './routes/CreatePage';
 import LandingPage from './routes/LandingPage';
@@ -103,6 +104,10 @@ const AppRouter = () => {
       <Route
         path="/timetables/:id/lectures"
         element={<RouteGuard element={<LectureListPage />} />}
+      />
+      <Route
+        path="/timetables/:id/lectures/:lectureId"
+        element={<RouteGuard element={<CourseDetailPage />} />}
       />
       <Route
         path="/mypage/account"
