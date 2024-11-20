@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from './../contexts/AuthContext';
+import { useLectureContext } from './../contexts/LectureContext';
 
 export default function SignInPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-
-  const handleBack = () => {
-    navigate('/');
-  };
+  const { setTimetableId, refetchLectures } = useLectureContext();
 
   const [formData, setFormData] = useState({
     id: '',
@@ -17,6 +15,10 @@ export default function SignInPage() {
   });
 
   const [error, setError] = useState('');
+
+  const handleBack = () => {
+    navigate('/');
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,7 +51,29 @@ export default function SignInPage() {
       console.debug('Login Success:', data);
 
       login();
-      navigate('/timepage');
+
+      // Fetch recent timetable after login
+      const recentTimetableResponse = await fetch(
+        'https://wafflestudio-seminar-2024-snutt-redirect.vercel.app/v1/tables/recent',
+        {
+          headers: {
+            'x-access-token': data.token,
+          },
+        },
+      );
+
+      if (!recentTimetableResponse.ok) {
+        throw new Error('최근 시간표를 가져오지 못했습니다.');
+      }
+
+      const recentTimetable = (await recentTimetableResponse.json()) as {
+        _id: string;
+      };
+
+      setTimetableId(recentTimetable._id);
+      await refetchLectures();
+
+      navigate(`/timetables/${recentTimetable._id}`);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

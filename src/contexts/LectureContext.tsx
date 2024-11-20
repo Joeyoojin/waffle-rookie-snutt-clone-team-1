@@ -14,7 +14,7 @@ type ClassTime = {
   endMinute: number;
 };
 
-export type Lecture = {
+type Lecture = {
   _id: string;
   course_title: string;
   instructor: string;
@@ -26,9 +26,9 @@ export type Lecture = {
 };
 
 type LectureContextType = {
+  lectures: Lecture[];
   timetableId: string | null;
   setTimetableId: (id: string) => void;
-  lectures: Lecture[];
   isLoading: boolean;
   error: string | null;
   refetchLectures: () => Promise<void>;
@@ -50,7 +50,7 @@ export const LectureProvider = ({ children }: { children: ReactNode }) => {
   ): Promise<T> => {
     const token = localStorage.getItem('token');
     if (token === null || token === '') {
-      throw new Error('No token found. Please log in again.');
+      throw new Error('토큰이 없으므로 재로그인 하세요');
     }
 
     const response = await fetch(url, {
@@ -75,7 +75,7 @@ export const LectureProvider = ({ children }: { children: ReactNode }) => {
 
   const refetchLectures = useCallback(async () => {
     if (timetableId === null || timetableId === '') {
-      setError('No timetable ID available.');
+      setError('No timetable ID');
       setIsLoading(false);
       return;
     }
@@ -106,7 +106,7 @@ export const LectureProvider = ({ children }: { children: ReactNode }) => {
 
   const addLecture = async (lecture: Lecture) => {
     if (timetableId === null || timetableId === '') {
-      throw new Error('No timetableId set.');
+      throw new Error('No timetableId set');
     }
 
     try {
@@ -171,7 +171,7 @@ export const LectureProvider = ({ children }: { children: ReactNode }) => {
 export const useLectureContext = () => {
   const context = useContext(LectureContext);
   if (context === undefined) {
-    throw new Error('useLectureContext must be used within a LectureProvider');
+    throw new Error();
   }
   return context;
 };

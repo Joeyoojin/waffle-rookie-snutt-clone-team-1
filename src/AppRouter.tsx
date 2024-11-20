@@ -1,6 +1,8 @@
+import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import loading_lottie from '././assets/loading_lottie.json';
 import RouteGuard from './components/RouteGuard';
 import { useAuth } from './contexts/AuthContext';
 import { useLectureContext } from './contexts/LectureContext';
@@ -64,7 +66,16 @@ const AppRouter = () => {
   }, [isLoggedIn, setTimetableId]);
 
   if (loading) {
-    return <div>Loading...</div>; // 로딩 화면
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Lottie
+          animationData={loading_lottie}
+          loop
+          autoplay
+          style={{ width: 200, height: 200 }}
+        />
+      </div>
+    );
   }
 
   return (
